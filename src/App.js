@@ -1,25 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import {FB} from "./helpers/firebaseInit";
+import React, {Component} from 'react'
+import Aside from "./components/aside/aside";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  componentDidMount() {
+    //Получение информации об оборудовании
+    /*FB.firestore().collection("inventory").get().then(response => {
+      let docs = response.docs.map(x => ({
+        id: x.id,
+        data: x.data(),
+        placeId: x.data().place.id
+      }));
+      console.info('оборудовании', docs);
+    });*/
+  }
+
+  render() {
+    return (
+        <div className="container">
+          <section className="section-app">
+            <Aside />
+          </section>
+        </div>
+    );
+  }
 }
 
 export default App;
