@@ -1,7 +1,6 @@
 import './App.css';
-import {FB} from "./helpers/firebaseInit";
 import React, {Component} from 'react'
-import Aside from "./components/aside/aside";
+import Aside from "./components/Aside/Aside";
 
 class App extends Component {
 
