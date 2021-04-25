@@ -1,29 +1,39 @@
-import React from 'react'
+import React, {Component} from 'react'
 import AsideListItem from "./AsideListItem/AsideListItem";
+import {connect} from "react-redux";
 
-const AsideList = props => {
-    const { housesId, renderLists, places, inventory } = props
 
-    const allPlacesId = []
-    inventory.forEach(el => allPlacesId.push(el.placeId))
+class AsideList extends Component {
 
-    return (
-        <ul className="aside-list">
-            {places.map( place  => {
-                if ( housesId.includes(place.id) ) {
-                    return (
-                        <AsideListItem
-                            key={place.id}
-                            place={place}
-                            renderLists={renderLists}
-                            inventory={inventory}
-                            allPlacesId={allPlacesId}
-                        />
-                    )
-                }
-            })}
-        </ul>
-    )
+    render() {
+        return (
+            <ul className="aside-list"
+                onClick={e => this.props.onClickPlaceHandler.call(this.props.context, e)}
+            >
+                {this.props.places.map( place  => {
+                    if ( this.props.housesId.includes(place.id) ) {
+                        return (
+                            <AsideListItem
+                                key={place.id}
+                                place={place}
+                                renderLists={this.props.renderLists}
+                                inventory={this.props.inventory}
+                                allPlaceIdWithHasInventory={this.props.allPlaceIdWithHasInventory}
+                            />
+                        )
+                    }
+                })}
+            </ul>
+        )
+    }
 }
 
-export default AsideList
+const mapStateToProps = state => {
+    return {
+        allPlaceIdWithHasInventory: state.inventory.allPlaceIdWithHasInventory
+    }
+}
+
+
+export default connect(mapStateToProps)(AsideList)
+

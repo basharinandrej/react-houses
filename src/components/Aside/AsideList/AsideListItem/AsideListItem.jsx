@@ -2,11 +2,13 @@ import React from 'react'
 import './AsideListItem.css'
 import Indicator from "../../../../UI/Indicator/Indicator";
 
-const AsideListItem = props => {
-    const { place, renderLists, inventory, allPlacesId } = props
 
-    const stateIndicator = allPlacesId.includes(place.id)
-        && inventory.find(el => el.placeId === place.id ? el : 'Нет оборудования')
+const AsideListItem = props => {
+    const { place, renderLists, inventory, allPlaceIdWithHasInventory } = props
+
+
+    const stateIndicator = allPlaceIdWithHasInventory?.includes(place.id)
+        && inventory.find(el => el.placeId === place.id ? el : null)
 
     return (
         <li className="aside-list__item">
