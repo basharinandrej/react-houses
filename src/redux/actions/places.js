@@ -1,12 +1,10 @@
 import { FB } from "../../helpers/firebaseInit";
 import {
-    ERROR_FETCH_PLACES, SET_CHILDREN_HAS_INVENTORY,
+    ERROR_FETCH_PLACES, SET_CHILDREN_PLACE_WITH_HAS_INVENTORY,
     SET_CURRENT_PLACE,
     START_FETCH_PLACES,
     SUCCESS_FETCH_PLACES
 } from "./actionType";
-import {findChildrenInventory, findCurrentInventory} from "./inventory";
-import _ from 'lodash'
 
 export const fetchPlaces = () => {
     return async dispatch => {
@@ -50,67 +48,16 @@ export const errorFetchPlaces = error => {
     }
 }
 
-export const findCurrentPlace = placeId => {
-    return ( dispatch, setState ) => {
-        const placesItems = setState().places.placesItems
-        const currentPlace = placesItems.find(el => el.id === placeId)
-
-        dispatch(setCurrentPlace(currentPlace))
-        dispatch(findCurrentInventory(placeId))
-        dispatch(findChildrenHasInventory())
-    }
-}
-
-export const setCurrentPlace = currentPlace => {
-
+export const setCurrentPlace = placeId => {
     return {
         type: SET_CURRENT_PLACE,
-        currentPlace
+        placeId
     }
 }
 
-export const findChildrenHasInventory = () => {
-    //TODO Сделать Рефакторинг
-    return (dispatch, setState) => {
-        const currentPlace = setState().places.currentPlace
-        const placesItems = setState().places.placesItems
-        const allPlaceIdWithHasInventory = setState().inventory.allPlaceIdWithHasInventory
-
-        const parts = []
-
-        currentPlace.parts?.forEach(el => {
-            parts.push(el)
-
-            placesItems.forEach(place => {
-                if ( place.id === el && place.parts) {
-                    parts.push( place.parts )
-                }
-            })
-        })
-
-        const childrenIdHasInventory = _.intersection( allPlaceIdWithHasInventory, _.flattenDeep(parts))
-
-        const childrenPlaceHasInventory = []
-
-        for( let i = 0; i < childrenIdHasInventory.length; i++) {
-            placesItems.find(el => {
-                if (el.id === childrenIdHasInventory[i] ) {
-                    childrenPlaceHasInventory.push(el)
-                }
-            })
-        }
-
-        childrenPlaceHasInventory.forEach(el => {
-            dispatch(findChildrenInventory(el.id))
-        })
-        dispatch(setChildrenHasInventory(childrenPlaceHasInventory))
-    }
-}
-
-export const setChildrenHasInventory = childrenPlaceHasInventory => {
+export const setPlaceChildrenHasInventory = allPlaceIdWithHasInventory => {
     return {
-        type: SET_CHILDREN_HAS_INVENTORY,
-        childrenPlaceHasInventory
+        type: SET_CHILDREN_PLACE_WITH_HAS_INVENTORY,
+        allPlaceIdWithHasInventory
     }
 }
-

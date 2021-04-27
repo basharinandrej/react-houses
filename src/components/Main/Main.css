@@ -1,3 +1,16 @@
 .main {
+    flex-grow: 1;
+}
 
+.container {
+    max-width: 576px;
+    margin: 0 auto;
+}
+
+.main__wrapper {
+    padding-left: 24px;
+}
+
+.main__paragraph {
+    padding-left: 40px;
 }

@@ -1,10 +1,12 @@
 import {
     ALL_PLACE_ID_WITH_HAS_INVENTORY,
     ERROR_FETCH_INVENTORY,
-    SET_CURRENT_INVENTORY, SET_INVENTORY_CHILDREN,
+    SET_CURRENT_INVENTORY,
     START_FETCH_INVENTORY,
     SUCCESS_FETCH_INVENTORY
 } from "../actions/actionType";
+import {findCurrentInventory} from "../../helpers/inventory";
+import {findAllPlaceIdWithHasInventory} from "../../helpers/places";
 
 const initialState = {
     inventoryItems: [],
@@ -38,17 +40,18 @@ const inventory = (state = initialState, action) => {
         case SET_CURRENT_INVENTORY:
             return {
                 ...state,
-                currentInventory: action.currentInventory
-            }
-        case SET_INVENTORY_CHILDREN:
-            return {
-                ...state,
-                childrenInventory: action.childrenInventory
+                currentInventory: findCurrentInventory(
+                    [...state.inventoryItems],
+                    action.placeId
+                )
             }
         case ALL_PLACE_ID_WITH_HAS_INVENTORY:
             return {
                 ...state,
-                allPlaceIdWithHasInventory: action.allPlaceIdWithHasInventory
+                allPlaceIdWithHasInventory: findAllPlaceIdWithHasInventory(
+                    [...state.inventoryItems],
+                    action.allPlaceIdWithHasInventory
+                )
             }
     }
 

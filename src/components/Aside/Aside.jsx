@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import { difference as getIdHouses } from 'lodash'
-import { flatten as flattenInCommonArray } from 'lodash'
+import { flattenDeep as flattenInCommonArray } from 'lodash'
 import AsideList from "./AsideList/AsideList";
 import './Aside.css'
 import {connect} from "react-redux";
-import {fetchPlaces, findCurrentPlace} from "../../redux/actions/places";
-import {fetchInventory} from "../../redux/actions/inventory";
+import {fetchPlaces, setPlaceChildrenHasInventory, setCurrentPlace} from "../../redux/actions/places";
+import {fetchInventory, setCurrentInventory} from "../../redux/actions/inventory";
 
 
 class Aside extends Component {
@@ -20,7 +20,9 @@ class Aside extends Component {
         const target = event.target
 
         if (target.id !== '') {
-            this.props.findCurrentPlace(target.id)
+            this.props.setCurrentPlace(target.id)
+            this.props.setCurrentInventory(target.id)
+            this.props.setPlaceChildrenHasInventory(this.props.allPlaceIdWithHasInventory)
         }
     }
 
@@ -65,7 +67,9 @@ const mapStateToProps = state => {
     return {
         places: state.places.placesItems,
         isLoading: state.places.isLoading,
-        inventory: state.inventory.inventoryItems
+        inventory: state.inventory.inventoryItems,
+        allPlaceIdWithHasInventory: state.inventory.allPlaceIdWithHasInventory,
+        childrenPlaceHasInventory: state.places.childrenPlaceHasInventory
     }
 }
 
@@ -73,7 +77,9 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchPlaces: () => dispatch(fetchPlaces()),
         fetchInventory: () => dispatch(fetchInventory()),
-        findCurrentPlace: placeId => dispatch(findCurrentPlace(placeId)),
+        setCurrentPlace: placeId => dispatch(setCurrentPlace(placeId)),
+        setCurrentInventory: placeId => dispatch(setCurrentInventory(placeId)),
+        setPlaceChildrenHasInventory: allPlaceIdWithHasInventory => dispatch(setPlaceChildrenHasInventory(allPlaceIdWithHasInventory)),
     }
 }
 

@@ -3,14 +3,13 @@ import {
     ALL_PLACE_ID_WITH_HAS_INVENTORY,
     ERROR_FETCH_INVENTORY,
     SET_CURRENT_INVENTORY,
-    SET_INVENTORY_CHILDREN,
     START_FETCH_INVENTORY,
     SUCCESS_FETCH_INVENTORY
 } from "./actionType";
 
 
 export const fetchInventory = () => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
             //Получение информации об оборудовании
             const response = await FB.firestore().collection("inventory").get()
@@ -22,7 +21,7 @@ export const fetchInventory = () => {
             }));
 
             dispatch(successFetchInventory(inventoryItems))
-            dispatch(findAllPlaceIdWithHasInventory())
+            dispatch(setAllPlaceIdWithHasInventory(getState().allPlaceIdWithHasInventory))
         } catch (e) {
             dispatch(errorFetchInventory(e))
         }
@@ -50,40 +49,12 @@ export const errorFetchInventory = error => {
     }
 }
 
-export const findCurrentInventory = placeId => (dispatch, getState) => {
-    const inventoryItems = getState().inventory.inventoryItems
-    const currentInventory = inventoryItems.filter(el => el.placeId === placeId ? el.data : null)
-
-    dispatch(setCurrentInventory(currentInventory))
-}
-
-export const setCurrentInventory = currentInventory => {
+export const setCurrentInventory = placeId => {
 
     return {
         type: SET_CURRENT_INVENTORY,
-        currentInventory: currentInventory || null
+        placeId
     }
-}
-
-export const findChildrenInventory = placeId => (dispatch, getState) => {
-    const inventoryItems = getState().inventory.inventoryItems
-    const childrenInventory = inventoryItems.filter(el => el.placeId === placeId ? el.data : null)
-
-    dispatch(setChildrenInventory(childrenInventory))
-}
-
-export const setChildrenInventory = childrenInventory => {
-    return {
-        type: SET_INVENTORY_CHILDREN,
-        childrenInventory
-    }
-}
-
-export const findAllPlaceIdWithHasInventory = () => (dispatch, setState) => {
-    const inventory = setState().inventory.inventoryItems
-    const getAllPlaceIdWithHasInventory = () => inventory.map(el => el.placeId)
-
-    dispatch(setAllPlaceIdWithHasInventory(getAllPlaceIdWithHasInventory()))
 }
 
 export const setAllPlaceIdWithHasInventory = allPlaceIdWithHasInventory => {
