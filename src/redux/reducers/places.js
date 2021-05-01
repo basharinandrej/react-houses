@@ -4,12 +4,13 @@ import {
     START_FETCH_PLACES,
     SUCCESS_FETCH_PLACES
 } from "../actions/actionType";
+
 import {findCurrentPlace, findPlaceChildrenWithHasInventory} from "../../helpers/places";
 
 
 const initialState = {
     placesItems: [],
-    childrenPlaceHasInventory: null,
+    childrenPlaceHasInventoryArray: null,
     isLoading: true,
     currentPlace: null,
     error: null
@@ -43,7 +44,7 @@ const places = (state = initialState, action) => {
         case SET_CHILDREN_PLACE_WITH_HAS_INVENTORY:
             return {
                 ...state,
-                childrenPlaceHasInventory: findPlaceChildrenWithHasInventory(
+                childrenPlaceHasInventoryArray: findPlaceChildrenWithHasInventory(
                     { ...state },
                     action.allPlaceIdWithHasInventory
                 )

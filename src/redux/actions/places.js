@@ -1,10 +1,12 @@
 import { FB } from "../../helpers/firebaseInit";
 import {
-    ERROR_FETCH_PLACES, SET_CHILDREN_PLACE_WITH_HAS_INVENTORY,
+    ERROR_FETCH_PLACES,
+    SET_CHILDREN_PLACE_WITH_HAS_INVENTORY,
     SET_CURRENT_PLACE,
     START_FETCH_PLACES,
     SUCCESS_FETCH_PLACES
 } from "./actionType";
+import {getInventoryPlaceChildren} from "./inventory";
 
 export const fetchPlaces = () => {
     return async dispatch => {
@@ -53,6 +55,12 @@ export const setCurrentPlace = placeId => {
         type: SET_CURRENT_PLACE,
         placeId
     }
+}
+
+export const dispatchChildrenPlaceAndInventory = allPlaceIdWithHasInventory => dispatch => {
+
+    dispatch(setPlaceChildrenHasInventory(allPlaceIdWithHasInventory))
+    dispatch(getInventoryPlaceChildren())
 }
 
 export const setPlaceChildrenHasInventory = allPlaceIdWithHasInventory => {

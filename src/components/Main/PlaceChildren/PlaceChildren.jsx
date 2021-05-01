@@ -8,18 +8,18 @@ class PlaceChildren extends Component {
 
         return (
             <>{
-                this.props.childrenPlaceHasInventory?.map(el => {
+                this.props.childrenPlaceHasInventoryArray?.map(childrenPlace => {
                     return (
-                        <div className="main__wrapper" key={el.id}>
-                            <h2>{el.data.name}</h2>
+                        <div className="main__wrapper" key={childrenPlace.id}>
+                            <h2>{childrenPlace.data.name}</h2>
 
-                            {/*{this.props.childrenInventory.map(item => {*/}
-                            {/*    return (*/}
-                            {/*        <p className="main__paragraph" key={item.id}>*/}
-                            {/*            {item.data.name}*/}
-                            {/*        </p>*/}
-                            {/*    )*/}
-                            {/*})}*/}
+                            {this.props.childrenInventory.map(item => {
+                                return (
+                                    <p className="main__paragraph" key={item.id}>
+                                        {item.data.name}
+                                    </p>
+                                )
+                            })}
                         </div>
                     )
                 })
@@ -31,7 +31,7 @@ class PlaceChildren extends Component {
 
 const mapStateToProps = state => {
     return {
-        childrenPlaceHasInventory: state.places.childrenPlaceHasInventory,
+        childrenPlaceHasInventoryArray: state.places.childrenPlaceHasInventoryArray,
         childrenInventory: state.inventory.childrenInventory
     }
 }

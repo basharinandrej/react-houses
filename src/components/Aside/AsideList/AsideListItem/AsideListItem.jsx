@@ -1,6 +1,6 @@
 import React from 'react'
 import './AsideListItem.css'
-import Indicator from "../../../../UI/Indicator/Indicator";
+import {Indicator as IndicatorHasInventory} from "../../../../UI/Indicator/Indicator";
 
 
 const AsideListItem = props => {
@@ -16,7 +16,7 @@ const AsideListItem = props => {
                 id={place.id}>
                 {place.data.name}
 
-                <Indicator
+                <IndicatorHasInventory
                     stateIndicator={stateIndicator}
                 />
             </p>

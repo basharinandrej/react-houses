@@ -20,11 +20,11 @@ class Main extends Component {
                                         <p>Количество: {el.data.count}</p>
                                     </div>
                                 })
-                                :  this.props.childrenPlaceHasInventory?.length === 0
+                                :  this.props.childrenPlaceHasInventoryArray?.length === 0
                                 ? <p>Нет Оборудования</p> : null
                             }
 
-                            <PlaceChildren/>
+                            <PlaceChildren />
                         </>
                         )
                     }
@@ -40,7 +40,7 @@ const mapStateToProps = state => {
         name: state.places.currentPlace?.data.name,
         isLoading: state.inventory.isLoading,
         currentInventory: state.inventory.currentInventory,
-        childrenPlaceHasInventory: state.places.childrenPlaceHasInventory,
+        childrenPlaceHasInventoryArray: state.places.childrenPlaceHasInventoryArray,
     }
 }
 

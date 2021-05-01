@@ -3,6 +3,7 @@ import {
     ALL_PLACE_ID_WITH_HAS_INVENTORY,
     ERROR_FETCH_INVENTORY,
     SET_CURRENT_INVENTORY,
+    SET_INVENTORY_PLACE_CHILDREN,
     START_FETCH_INVENTORY,
     SUCCESS_FETCH_INVENTORY
 } from "./actionType";
@@ -49,11 +50,26 @@ export const errorFetchInventory = error => {
     }
 }
 
-export const setCurrentInventory = placeId => {
+export const setInventoryCurrentPlace = placeId => {
 
     return {
         type: SET_CURRENT_INVENTORY,
         placeId
+    }
+}
+
+export const getInventoryPlaceChildren = () => (dispatch, getState) => {
+    const inventoryItems = getState().inventory.inventoryItems
+    const childrenPlaceHasInventoryArray = getState().places.childrenPlaceHasInventoryArray
+
+    dispatch(setInventoryPlaceChildren(inventoryItems, childrenPlaceHasInventoryArray))
+}
+
+export const setInventoryPlaceChildren = (inventoryItems, childrenPlaceHasInventoryArray) => {
+    return {
+        type: SET_INVENTORY_PLACE_CHILDREN,
+        inventoryItems,
+        childrenPlaceHasInventoryArray
     }
 }
 

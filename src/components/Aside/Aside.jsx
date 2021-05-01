@@ -4,8 +4,8 @@ import { flattenDeep as flattenInCommonArray } from 'lodash'
 import AsideList from "./AsideList/AsideList";
 import './Aside.css'
 import {connect} from "react-redux";
-import {fetchPlaces, setPlaceChildrenHasInventory, setCurrentPlace} from "../../redux/actions/places";
-import {fetchInventory, setCurrentInventory} from "../../redux/actions/inventory";
+import {fetchPlaces, dispatchChildrenPlaceAndInventory, setCurrentPlace} from "../../redux/actions/places";
+import {fetchInventory, setInventoryCurrentPlace} from "../../redux/actions/inventory";
 
 
 class Aside extends Component {
@@ -21,8 +21,8 @@ class Aside extends Component {
 
         if (target.id !== '') {
             this.props.setCurrentPlace(target.id)
-            this.props.setCurrentInventory(target.id)
-            this.props.setPlaceChildrenHasInventory(this.props.allPlaceIdWithHasInventory)
+            this.props.setInventoryCurrentPlace(target.id)
+            this.props.dispatchChildrenPlaceAndInventory(this.props.allPlaceIdWithHasInventory)
         }
     }
 
@@ -69,7 +69,7 @@ const mapStateToProps = state => {
         isLoading: state.places.isLoading,
         inventory: state.inventory.inventoryItems,
         allPlaceIdWithHasInventory: state.inventory.allPlaceIdWithHasInventory,
-        childrenPlaceHasInventory: state.places.childrenPlaceHasInventory
+        childrenPlaceHasInventoryArray: state.places.childrenPlaceHasInventoryArray
     }
 }
 
@@ -78,8 +78,8 @@ const mapDispatchToProps = dispatch => {
         fetchPlaces: () => dispatch(fetchPlaces()),
         fetchInventory: () => dispatch(fetchInventory()),
         setCurrentPlace: placeId => dispatch(setCurrentPlace(placeId)),
-        setCurrentInventory: placeId => dispatch(setCurrentInventory(placeId)),
-        setPlaceChildrenHasInventory: allPlaceIdWithHasInventory => dispatch(setPlaceChildrenHasInventory(allPlaceIdWithHasInventory)),
+        setInventoryCurrentPlace: placeId => dispatch(setInventoryCurrentPlace(placeId)),
+        dispatchChildrenPlaceAndInventory: allPlaceIdWithHasInventory => dispatch(dispatchChildrenPlaceAndInventory(allPlaceIdWithHasInventory)),
     }
 }
 

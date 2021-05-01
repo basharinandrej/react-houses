@@ -1,5 +1,5 @@
 import {flattenDeep as flattenPartsIdPlaceChildrenInCommonArray} from 'lodash'
-import {intersection as getPlaceChildrenIdHasInventory} from 'lodash'
+import {intersection as getIdPlaceChildrenHasInventory} from 'lodash'
 
 export const findCurrentPlace = (placesItems, placeId) => {
     return placesItems.find(el => el.id === placeId)
@@ -26,18 +26,18 @@ export const findPlaceChildrenWithHasInventory = (state, allPlaceIdWithHasInvent
     })
 
     partsIdAtPlaceChildren = flattenPartsIdPlaceChildrenInCommonArray(partsIdAtPlaceChildren)
-    const placeChildrenIdHasInventory = getPlaceChildrenIdHasInventory( allPlaceIdWithHasInventory, partsIdAtPlaceChildren)
+    const idPlaceChildrenHasInventory = getIdPlaceChildrenHasInventory( allPlaceIdWithHasInventory, partsIdAtPlaceChildren)
 
 
-    const childrenPlaceHasInventory = []
+    const childrenPlaceHasInventoryArray = []
 
-    for( let i = 0; i < placeChildrenIdHasInventory.length; i++) {
+    for( let i = 0; i < idPlaceChildrenHasInventory.length; i++) {
         placesItems.find(el => {
-            if (el.id === placeChildrenIdHasInventory[i] ) {
-                childrenPlaceHasInventory.push(el)
+            if (el.id === idPlaceChildrenHasInventory[i] ) {
+                childrenPlaceHasInventoryArray.push(el)
             }
         })
     }
 
-    return childrenPlaceHasInventory
+    return childrenPlaceHasInventoryArray
 }
