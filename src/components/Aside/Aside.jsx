@@ -42,7 +42,6 @@ class Aside extends Component {
             return (
                 <AsideList
                     places={this.props.places}
-                    inventory={this.props.inventory}
                     housesId={array}
                     renderLists={renderLists}
                     onClickPlaceHandler={this.onClickPlaceHandler}
@@ -67,7 +66,6 @@ const mapStateToProps = state => {
     return {
         places: state.places.placesItems,
         isLoading: state.places.isLoading,
-        inventory: state.inventory.inventoryItems,
         allPlaceIdWithHasInventory: state.inventory.allPlaceIdWithHasInventory,
         childrenPlaceHasInventoryArray: state.places.childrenPlaceHasInventoryArray
     }

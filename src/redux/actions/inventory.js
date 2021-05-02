@@ -1,7 +1,8 @@
 import { FB } from "../../helpers/firebaseInit";
 import {
+    ADD_INVENTORY_ITEM,
     ALL_PLACE_ID_WITH_HAS_INVENTORY,
-    ERROR_FETCH_INVENTORY,
+    ERROR_FETCH_INVENTORY, REMOVE_INVENTORY_ITEM,
     SET_CURRENT_INVENTORY,
     SET_INVENTORY_PLACE_CHILDREN,
     START_FETCH_INVENTORY,
@@ -10,7 +11,7 @@ import {
 
 
 export const fetchInventory = () => {
-    return async (dispatch, getState) => {
+    return async dispatch => {
         try {
             //Получение информации об оборудовании
             const response = await FB.firestore().collection("inventory").get()
@@ -22,7 +23,6 @@ export const fetchInventory = () => {
             }));
 
             dispatch(successFetchInventory(inventoryItems))
-            dispatch(setAllPlaceIdWithHasInventory(getState().allPlaceIdWithHasInventory))
         } catch (e) {
             dispatch(errorFetchInventory(e))
         }
@@ -51,7 +51,6 @@ export const errorFetchInventory = error => {
 }
 
 export const setInventoryCurrentPlace = placeId => {
-
     return {
         type: SET_CURRENT_INVENTORY,
         placeId
@@ -73,9 +72,24 @@ export const setInventoryPlaceChildren = (inventoryItems, childrenPlaceHasInvent
     }
 }
 
-export const setAllPlaceIdWithHasInventory = allPlaceIdWithHasInventory => {
+export const setAllPlaceIdWithHasInventory = placesItems => {
     return {
         type: ALL_PLACE_ID_WITH_HAS_INVENTORY,
-        allPlaceIdWithHasInventory
+        placesItems
+    }
+}
+
+export const removeInventoryItem = id => {
+    return {
+        type: REMOVE_INVENTORY_ITEM,
+        id
+    }
+}
+
+export const addInventoryItem = (placeId, placesItems) => {
+    return {
+        type: ADD_INVENTORY_ITEM,
+        placeId,
+        placesItems
     }
 }

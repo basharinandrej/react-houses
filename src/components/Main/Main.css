@@ -1,5 +1,6 @@
 .main {
     flex-grow: 1;
+    padding-top: 32px;
 }
 
 .container {
@@ -9,8 +10,27 @@
 
 .main__wrapper {
     padding-left: 24px;
+    margin-bottom: 40px;
 }
 
 .main__paragraph {
-    padding-left: 40px;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+.main__title {
+    margin: 0 0 24px 0;
+}
+
+h1.title {
+    font-size: 36px;
+    font-family: sans-serif;
+}
+h2.title {
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+.main .list-main {
+    margin-bottom: 24px;
 }

@@ -4,8 +4,7 @@ import {
     START_FETCH_PLACES,
     SUCCESS_FETCH_PLACES
 } from "../actions/actionType";
-
-import {findCurrentPlace, findPlaceChildrenWithHasInventory} from "../../helpers/places";
+import {findCurrentPlace, findPlaceChildrenWithHasInventory} from "../helpers/places";
 
 
 const initialState = {
@@ -45,7 +44,7 @@ const places = (state = initialState, action) => {
             return {
                 ...state,
                 childrenPlaceHasInventoryArray: findPlaceChildrenWithHasInventory(
-                    { ...state },
+                    { ...state},
                     action.allPlaceIdWithHasInventory
                 )
             }

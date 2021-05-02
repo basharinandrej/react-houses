@@ -4,17 +4,16 @@ import {Indicator as IndicatorHasInventory} from "../../../../UI/Indicator/Indic
 
 
 const AsideListItem = props => {
-    const { place, renderLists, inventory, allPlaceIdWithHasInventory } = props
-
+    const { place, renderLists, placesItems, allPlaceIdWithHasInventory } = props
 
     const stateIndicator = allPlaceIdWithHasInventory?.includes(place.id)
-        && inventory.find(el => el.placeId === place.id ? el : null)
+        && placesItems.find(el => el.id === place.id ? el : null)
 
     return (
         <li className="aside-list__item">
             <p className="aside-list__paragraph"
-                id={place.id}>
-                {place.data.name}
+                id={ place.id }>
+                { place.data?.name }
 
                 <IndicatorHasInventory
                     stateIndicator={stateIndicator}

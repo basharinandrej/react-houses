@@ -1,12 +1,27 @@
 import {flattenDeep as flattenPartsIdPlaceChildrenInCommonArray} from 'lodash'
 import {intersection as getIdPlaceChildrenHasInventory} from 'lodash'
+import {uniq as uniq} from 'lodash'
 
-export const findCurrentPlace = (placesItems, placeId) => {
-    return placesItems.find(el => el.id === placeId)
-}
+export const findCurrentPlace = (placesItems, placeId) => placesItems.find(el => el.id === placeId)
 
-export const findAllPlaceIdWithHasInventory = inventoryItems => {
-    return inventoryItems.map(el => el.placeId)
+export const findAllPlaceIdWithHasInventory = (inventoryItems, placesItems) => {
+    const allPlaceIdWithHasInventory = inventoryItems?.map(el => el.placeId)
+
+    const findDeepRecursionPlaceId = (placeId, placesItems) => {
+        placesItems?.find(place => {
+            if (place.parts?.includes( placeId )) {
+                allPlaceIdWithHasInventory.push(place.id)
+
+                findDeepRecursionPlaceId(place.id, placesItems)
+            }
+        })
+    }
+
+    allPlaceIdWithHasInventory.map(placeId => {
+        return findDeepRecursionPlaceId(placeId, placesItems)
+    })
+
+    return uniq(allPlaceIdWithHasInventory)
 }
 
 export const findPlaceChildrenWithHasInventory = (state, allPlaceIdWithHasInventory) => {
@@ -39,5 +54,6 @@ export const findPlaceChildrenWithHasInventory = (state, allPlaceIdWithHasInvent
         })
     }
 
+    console.log('1', childrenPlaceHasInventoryArray);
     return childrenPlaceHasInventoryArray
 }

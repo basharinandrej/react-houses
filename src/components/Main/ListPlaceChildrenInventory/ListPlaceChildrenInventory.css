@@ -1,0 +1,31 @@
+.list-main__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.list-main__item:last-child {
+    margin-bottom: 0;
+}
+
+.list-main__paragraph {
+    font-family: sans-serif;
+    font-size: 18px;
+    margin: 0;
+}
+
+.list-main__paragraph--remove {
+    font-family: sans-serif;
+    font-size: 20px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.list-main__paragraph--remove:hover {
+    color: red;
+    transition: .3s;
+}
+
+.list-main+.button {
+    margin-left: 36px;
+}

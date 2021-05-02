@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 
 class AsideList extends Component {
 
+
     render() {
         return (
             <ul className="aside-list"
@@ -17,7 +18,7 @@ class AsideList extends Component {
                                 key={place.id}
                                 place={place}
                                 renderLists={this.props.renderLists}
-                                inventory={this.props.inventory}
+                                placesItems={this.props.places}
                                 allPlaceIdWithHasInventory={this.props.allPlaceIdWithHasInventory}
                             />
                         )

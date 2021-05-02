@@ -1,5 +1,7 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import {connect} from "react-redux";
+import './PlaceChildren.css'
+import ListPlaceChildrenInventory from "../ListPlaceChildrenInventory/ListPlaceChildrenInventory";
 
 
 class PlaceChildren extends Component {
@@ -11,15 +13,12 @@ class PlaceChildren extends Component {
                 this.props.childrenPlaceHasInventoryArray?.map(childrenPlace => {
                     return (
                         <div className="main__wrapper" key={childrenPlace.id}>
-                            <h2>{childrenPlace.data.name}</h2>
+                            <h2 className="main__title title">{childrenPlace.data.name}</h2>
 
-                            {this.props.childrenInventory.map(item => {
-                                return (
-                                    <p className="main__paragraph" key={item.id}>
-                                        {item.data.name}
-                                    </p>
-                                )
-                            })}
+                            <ListPlaceChildrenInventory
+                                childrenInventory={this.props.childrenInventory}
+                                childrenPlaceId={childrenPlace.id}
+                            />
                         </div>
                     )
                 })

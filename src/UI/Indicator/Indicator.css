@@ -5,6 +5,7 @@
     border-radius: 50%;
     background: red;
     display: block;
+    margin-left: 12px;
 }
 
 .indicator--success {

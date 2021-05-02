@@ -1,12 +1,13 @@
 import {
+    ADD_INVENTORY_ITEM,
     ALL_PLACE_ID_WITH_HAS_INVENTORY,
-    ERROR_FETCH_INVENTORY,
+    ERROR_FETCH_INVENTORY, REMOVE_INVENTORY_ITEM,
     SET_CURRENT_INVENTORY, SET_INVENTORY_PLACE_CHILDREN,
     START_FETCH_INVENTORY,
     SUCCESS_FETCH_INVENTORY
 } from "../actions/actionType";
-import {findInventoryCurrentPlace, findInventoryPlaceChildren} from "../../helpers/inventory";
-import {findAllPlaceIdWithHasInventory} from "../../helpers/places";
+import {findInventoryCurrentPlace, findInventoryPlaceChildren, removeInventoryItem, addInventoryItem} from "../helpers/inventory";
+import {findAllPlaceIdWithHasInventory} from "../helpers/places";
 
 
 const initialState = {
@@ -51,7 +52,7 @@ const inventory = (state = initialState, action) => {
                 ...state,
                 allPlaceIdWithHasInventory: findAllPlaceIdWithHasInventory(
                     [...state.inventoryItems],
-                    action.allPlaceIdWithHasInventory
+                    action.placesItems
                 )
             }
         case SET_INVENTORY_PLACE_CHILDREN:
@@ -61,6 +62,22 @@ const inventory = (state = initialState, action) => {
                     action.inventoryItems,
                     action.childrenPlaceHasInventoryArray
                 )
+            }
+        case REMOVE_INVENTORY_ITEM:
+            return {
+                ...state,
+                inventoryItems: removeInventoryItem([...state.inventoryItems], action.id),
+                currentInventory: removeInventoryItem([...state.currentInventory], action.id),
+                childrenInventory: removeInventoryItem([...state.childrenInventory], action.id),
+            }
+        case ADD_INVENTORY_ITEM:
+            const place = state.inventoryItems[0]?.data.place
+            const newInventory = addInventoryItem(place, action.placeId)
+
+            return {
+                ...state,
+                inventoryItems: [...state.inventoryItems, newInventory],
+                currentInventory: [...state.currentInventory, newInventory]
             }
     }
 
