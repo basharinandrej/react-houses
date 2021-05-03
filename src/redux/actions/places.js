@@ -6,14 +6,12 @@ import {
     START_FETCH_PLACES,
     SUCCESS_FETCH_PLACES
 } from "./actionType";
-import {getInventoryPlaceChildren} from "./inventory";
 
 export const fetchPlaces = () => {
     return async dispatch => {
         dispatch(startFetchPlaces())
 
         try {
-            // Получение информации о зданиях и комнатах
             const response = await FB.firestore().collection("places").get()
 
             let places = response.docs.map(x => ({
@@ -55,12 +53,6 @@ export const setCurrentPlace = placeId => {
         type: SET_CURRENT_PLACE,
         placeId
     }
-}
-
-export const dispatchChildrenPlaceAndInventory = allPlaceIdWithHasInventory => dispatch => {
-
-    dispatch(setPlaceChildrenHasInventory(allPlaceIdWithHasInventory))
-    dispatch(getInventoryPlaceChildren())
 }
 
 export const setPlaceChildrenHasInventory = allPlaceIdWithHasInventory => {

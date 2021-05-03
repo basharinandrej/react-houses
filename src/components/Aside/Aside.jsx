@@ -4,7 +4,11 @@ import { flattenDeep as flattenInCommonArray } from 'lodash'
 import AsideList from "./AsideList/AsideList";
 import './Aside.css'
 import {connect} from "react-redux";
-import {fetchPlaces, dispatchChildrenPlaceAndInventory, setCurrentPlace} from "../../redux/actions/places";
+import {
+    fetchPlaces,
+    setCurrentPlace,
+    setPlaceChildrenHasInventory
+} from "../../redux/actions/places";
 import {fetchInventory, setInventoryCurrentPlace} from "../../redux/actions/inventory";
 
 
@@ -22,7 +26,7 @@ class Aside extends Component {
         if (target.id !== '') {
             this.props.setCurrentPlace(target.id)
             this.props.setInventoryCurrentPlace(target.id)
-            this.props.dispatchChildrenPlaceAndInventory(this.props.allPlaceIdWithHasInventory)
+            this.props.setPlaceChildrenHasInventory(this.props.allPlaceIdWithHasInventory)
         }
     }
 
@@ -77,7 +81,7 @@ const mapDispatchToProps = dispatch => {
         fetchInventory: () => dispatch(fetchInventory()),
         setCurrentPlace: placeId => dispatch(setCurrentPlace(placeId)),
         setInventoryCurrentPlace: placeId => dispatch(setInventoryCurrentPlace(placeId)),
-        dispatchChildrenPlaceAndInventory: allPlaceIdWithHasInventory => dispatch(dispatchChildrenPlaceAndInventory(allPlaceIdWithHasInventory)),
+        setPlaceChildrenHasInventory: allPlaceIdWithHasInventory => dispatch(setPlaceChildrenHasInventory(allPlaceIdWithHasInventory)),
     }
 }
 

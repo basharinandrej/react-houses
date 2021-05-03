@@ -17,3 +17,15 @@ export const fetchAddInventoryItem = ({placeId, data: {name, count} }) => {
         console.info("Success Add Inventory Item");
     });
 }
+
+export const fetchUpdateInventoryItem = (id, name, count, placeId) => {
+    let fileStore = firebase.firestore();
+
+    firebase.firestore().collection("inventory").doc(id).set({
+        name,
+        count,
+        place: fileStore.collection("places").doc(placeId)
+    }).then(() => {
+        console.info("Success Update Inventory Item");
+    });
+}

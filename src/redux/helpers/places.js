@@ -54,6 +54,5 @@ export const findPlaceChildrenWithHasInventory = (state, allPlaceIdWithHasInvent
         })
     }
 
-    console.log('1', childrenPlaceHasInventoryArray);
     return childrenPlaceHasInventoryArray
 }

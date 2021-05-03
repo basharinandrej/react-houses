@@ -10,13 +10,13 @@ class ListPlaceChildrenInventory extends Component {
         return (
             <ul className="list-main">
                 {this.props.childrenInventory.map(inventory => {
-                    if (this.props.childrenPlaceId === inventory.placeId) {
+                    // if (this.props.childrenPlaceId === inventory.placeId) {
                         return (
                             <li className="list-main__item" key={inventory.id}>
                                 <p className="list-main__paragraph">{inventory.data.name} - {inventory.data.count} - шт.</p>
                             </li>
                         )
-                    }})}
+                    })}
             </ul>
         )
     }
@@ -28,4 +28,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapDispatchToProps)(ListPlaceChildrenInventory)
+export default connect(null, mapDispatchToProps)(ListPlaceChildrenInventory)

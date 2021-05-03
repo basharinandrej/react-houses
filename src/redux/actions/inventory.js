@@ -6,22 +6,22 @@ import {
     SET_CURRENT_INVENTORY,
     SET_INVENTORY_PLACE_CHILDREN,
     START_FETCH_INVENTORY,
-    SUCCESS_FETCH_INVENTORY
+    SUCCESS_FETCH_INVENTORY, UPDATE_INVENTORY_ITEM
 } from "./actionType";
 
 
 export const fetchInventory = () => {
     return async dispatch => {
         try {
-            //Получение информации об оборудовании
             const response = await FB.firestore().collection("inventory").get()
 
             let inventoryItems = response.docs.map(x => ({
                 id: x.id,
                 data: x.data(),
-                placeId: x.data().place.id
+                placeId: x.data().place?.id
             }));
 
+            console.log('inventoryItems', inventoryItems);
             dispatch(successFetchInventory(inventoryItems))
         } catch (e) {
             dispatch(errorFetchInventory(e))
@@ -57,13 +57,6 @@ export const setInventoryCurrentPlace = placeId => {
     }
 }
 
-export const getInventoryPlaceChildren = () => (dispatch, getState) => {
-    const inventoryItems = getState().inventory.inventoryItems
-    const childrenPlaceHasInventoryArray = getState().places.childrenPlaceHasInventoryArray
-
-    dispatch(setInventoryPlaceChildren(inventoryItems, childrenPlaceHasInventoryArray))
-}
-
 export const setInventoryPlaceChildren = (inventoryItems, childrenPlaceHasInventoryArray) => {
     return {
         type: SET_INVENTORY_PLACE_CHILDREN,
@@ -91,5 +84,13 @@ export const addInventoryItem = (placeId, placesItems) => {
         type: ADD_INVENTORY_ITEM,
         placeId,
         placesItems
+    }
+}
+
+export const editInventoryItem = (id, idCurrentPlace) => {
+    return {
+        type: UPDATE_INVENTORY_ITEM,
+        id,
+        idCurrentPlace
     }
 }

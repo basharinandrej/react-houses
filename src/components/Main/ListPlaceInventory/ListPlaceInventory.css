@@ -25,3 +25,20 @@
     color: red;
     transition: .3s;
 }
+
+.list-main__wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.list-main__paragraph--edit:hover {
+    color: green;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.list-main__separator {
+    margin: 0 10px;
+    font-size: 20px;
+    font-weight: bold
+}

@@ -12,6 +12,8 @@ class Main extends Component {
     hasCurrentInventory = () => this.props.currentInventory?.length
     hasCurrentPlace = () => this.props.currentPlace
 
+    addInventoryItemHandler = () => this.props.addInventoryItem(this.props.currentPlace?.id, this.props.places)
+
     render() {
         return (
             <main className="main">
@@ -30,9 +32,7 @@ class Main extends Component {
 
 
                             {this.hasNotChildrenPlace() && this.hasCurrentPlace() &&
-                                <Button onClick={() => this.props.addInventoryItem(
-                                    this.props.currentPlace?.id, this.props.places
-                                )}>
+                                <Button onClick={this.addInventoryItemHandler.bind(this)}>
                                     Добавить инвентарь
                                 </Button>
                             }
@@ -54,7 +54,6 @@ const mapStateToProps = state => {
         isLoading: state.inventory.isLoading,
         currentInventory: state.inventory.currentInventory,
         childrenPlaceHasInventoryArray: state.places.childrenPlaceHasInventoryArray,
-        allPlaceIdWithHasInventory: state.inventory.allPlaceIdWithHasInventory
     }
 }
 

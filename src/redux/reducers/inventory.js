@@ -4,9 +4,15 @@ import {
     ERROR_FETCH_INVENTORY, REMOVE_INVENTORY_ITEM,
     SET_CURRENT_INVENTORY, SET_INVENTORY_PLACE_CHILDREN,
     START_FETCH_INVENTORY,
-    SUCCESS_FETCH_INVENTORY
+    SUCCESS_FETCH_INVENTORY, UPDATE_INVENTORY_ITEM
 } from "../actions/actionType";
-import {findInventoryCurrentPlace, findInventoryPlaceChildren, removeInventoryItem, addInventoryItem} from "../helpers/inventory";
+import {
+    findInventoryCurrentPlace,
+    findInventoryPlaceChildren,
+    removeInventoryItem,
+    addInventoryItem,
+    updateInventoryItem
+} from "../helpers/inventory";
 import {findAllPlaceIdWithHasInventory} from "../helpers/places";
 
 
@@ -78,6 +84,13 @@ const inventory = (state = initialState, action) => {
                 ...state,
                 inventoryItems: [...state.inventoryItems, newInventory],
                 currentInventory: [...state.currentInventory, newInventory]
+            }
+        case UPDATE_INVENTORY_ITEM:
+            const inventoryItems = [...state.inventoryItems]
+
+            return {
+                ...state,
+                inventoryItems: updateInventoryItem(inventoryItems, action.id, action.idCurrentPlace),
             }
     }
 

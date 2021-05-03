@@ -1,4 +1,4 @@
-import {fetchAddInventoryItem, fetchRemoveInventoryItem} from "../services/inventory";
+import {fetchAddInventoryItem, fetchRemoveInventoryItem, fetchUpdateInventoryItem} from "../services/inventory";
 
 export const findInventoryCurrentPlace =  (inventoryItems, placeId) => {
     return inventoryItems.filter(el => el.placeId === placeId ? el.data : null)
@@ -42,4 +42,23 @@ export const addInventoryItem = (place, placeId) => {
 
     fetchAddInventoryItem(objInventory)
     return objInventory
+}
+
+export const updateInventoryItem = (array, id, idCurrentPlace) => {
+    const name = window.prompt('Введите новое название предмета')
+    const count = window.prompt('Введите новое кол-во предметов', '2')
+
+
+    array.map(el => {
+        if (el.id === id) {
+            el.data.name = name
+            el.data.count = count
+        } else {
+           return el
+        }
+    })
+
+    fetchUpdateInventoryItem(id, name, count, idCurrentPlace)
+
+    return array
 }
